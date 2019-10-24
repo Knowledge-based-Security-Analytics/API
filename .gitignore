@@ -3,5 +3,5 @@ node_modules/
 .vscode/
 graphql-cep.code-workspace
 package-lock.json
-schema.graphql
+schema.gql
 test.kafka
