@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.vscode/
+graphql-cep.code-workspace
+package-lock.json
+schema.graphql
+test.kafka
