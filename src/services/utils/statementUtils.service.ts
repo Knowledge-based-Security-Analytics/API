@@ -1,16 +1,18 @@
-import { DeployStatementInput, QueryStatementInput, RedeployStatementInput } from "../../models/statement.input";
-import Statement from "../../models/statement.type";
+import { DeployStatementInput, QueryStatementInput, RedeployStatementInput } from "../../models/graphql/statement.input";
+import Statement from "../../models/graphql/statement.type";
 import { Service, Inject } from "typedi";
 import MongoConnectorService from "../database/mongoConnector.service";
 import { StatementsRestApiService } from "../api/statementsRestApi.service";
-import { StatementApiReturn } from "../../models/statementApiReturn.type";
+import { StatementApiReturn } from "../../models/api/statementApiReturn.type";
+import { CustomException } from "../../models/exception/custom.exception";
+import { catCepRestPut } from "../log/config.logging";
 
 @Service()
 export class StatementUtilsService {
     constructor(private mongoConnectorService: MongoConnectorService,
         private statementsRestApiService: StatementsRestApiService) {}
 
-    public async createStatement( newStatementData: DeployStatementInput ): Promise<Statement | String> {
+    public async createStatement( newStatementData: DeployStatementInput ): Promise<Statement> {
         const statement = new Statement( 
             newStatementData.eplStatement,
             newStatementData.name ? newStatementData.name : newStatementData.eplStatement,
@@ -18,22 +20,27 @@ export class StatementUtilsService {
         return await this.deployStatement( statement );
     }
 
-    public async updateStatement( updateData: RedeployStatementInput ): Promise<Statement | null> {
+    public async updateStatement( updateData: RedeployStatementInput ): Promise<Statement> {
         let statement = await this.mongoConnectorService.readStatement( updateData.deploymentId );
-        statement.name = updateData.name ? updateData.name : statement.name;
-        statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
-        if (updateData.eplStatement && (statement.eplStatement !== updateData.eplStatement)) {
-            statement.eplStatement = updateData.eplStatement;
-            statement = this.deployStatement( statement, statement.deploymentId );
-        } else {
-            statement = await this.mongoConnectorService.updateStatement( statement.deploymentId, statement );
+        try {
+            statement.name = updateData.name ? updateData.name : statement.name;
+            statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
+            if (updateData.eplStatement && (statement.eplStatement !== updateData.eplStatement)) {
+                statement.eplStatement = updateData.eplStatement;
+                statement = this.deployStatement( statement, statement.deploymentId );
+            } else {
+                statement = await this.mongoConnectorService.updateStatement( statement.deploymentId, statement );
+            }
+            return statement;
+        } catch (error) {
+            catCepRestPut.info(() => `Statement with deploymentId ${updateData.deploymentId} not found in MongoDB` );
+            throw new CustomException( `Statement with deploymentId ${updateData.deploymentId} not found in MongoDB` );
         }
-        return statement;
     }
 
-    private async deployStatement( statement: Statement, deploymentId?: string ): Promise<Statement | String> {
+    private async deployStatement( statement: Statement, deploymentId?: string ): Promise<Statement> {
         const deploymentData = deploymentId ? await this.statementsRestApiService.postStatement( statement.eplStatement, deploymentId ) : await this.statementsRestApiService.postStatement( statement.eplStatement );
-        if (deploymentData instanceof StatementApiReturn) {
+        if (deploymentData) {
             statement.deploymentId = deploymentData.deploymentId;
             statement.deploymentDependencies = deploymentData.deploymentIdDependencies;
             deploymentId ? await this.mongoConnectorService.updateStatement( deploymentId, statement ) : await this.mongoConnectorService.createStatement(statement);

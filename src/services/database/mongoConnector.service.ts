@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import mongoose = require('mongoose');
-import Statement from "../../models/statement.type";
+import Statement from "../../models/graphql/statement.type";
 import { catMongoDb } from "../log/config.logging";
 
 @Service()

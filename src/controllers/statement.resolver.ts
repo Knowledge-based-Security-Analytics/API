@@ -1,6 +1,6 @@
 import { Resolver, Query, ArgsType, Field, Args, Mutation, Arg } from "type-graphql";
-import Statement from "../models/statement.type";
-import { DeployStatementInput, QueryStatementInput, RedeployStatementInput } from "../models/statement.input";
+import Statement from "../models/graphql/statement.type";
+import { DeployStatementInput, QueryStatementInput, RedeployStatementInput } from "../models/graphql/statement.input";
 import { StatementUtilsService } from "../services/utils/statementUtils.service";
 
 @Resolver(of => Statement)
@@ -13,12 +13,12 @@ export class StatementResolver {
     }
 
     @Mutation(returns => Statement)
-    async deployStatement(@Arg("data") newStatementData: DeployStatementInput): Promise<Statement | String> {
+    async deployStatement(@Arg("data") newStatementData: DeployStatementInput): Promise<Statement> {
         return await this.statementUtilsService.createStatement( newStatementData );
     }
 
-    @Mutation(returns => Statement, { nullable: true })
-    async redeployStatement(@Arg("data") updateStatementData: RedeployStatementInput): Promise<Statement | null> {
+    @Mutation(returns => Statement)
+    async redeployStatement(@Arg("data") updateStatementData: RedeployStatementInput): Promise<Statement> {
         return await this.statementUtilsService.updateStatement( updateStatementData );
     }
 
