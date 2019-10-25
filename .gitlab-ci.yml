@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags: 
+    - docker
+  image: node:latest
+  script: npm build
+  artifacts:
+    paths:
+      - dist/
+  
+#deploy:
+#  stage: deploy
+#  tags:
+#    - shell
+#  script:
+#    - docker build -t visualcepjava:0.1 .
+#    - docker kill visualcepjava || true
+#    - docker rm visualcepjava || true
+#    - docker run -p 8082:8082 --restart=always -d --name=visualcepjava visualcepjava:0.1
