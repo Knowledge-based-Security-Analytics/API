@@ -7,7 +7,9 @@ build:
   tags: 
     - docker
   image: node:latest
-  script: npm build
+  script: 
+    - npm build
+    - ls -la
   artifacts:
     paths:
       - dist/
