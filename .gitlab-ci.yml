@@ -15,12 +15,12 @@ build:
     paths:
       - dist/
   
-#deploy:
-#  stage: deploy
-#  tags:
-#    - shell
-#  script:
-#    - docker build -t visualcepjava:0.1 .
-#    - docker kill visualcepjava || true
-#    - docker rm visualcepjava || true
-#    - docker run -p 8082:8082 --restart=always -d --name=visualcepjava visualcepjava:0.1
+deploy:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - docker build -t visualcepgraphql:0.1 .
+    - docker kill visualcepgraphql || true
+    - docker rm visualcepgraphql || true
+    - docker run -p 4000:4000 --restart=always -d --name=visualcepgraphql visualcepgraphql:0.1
