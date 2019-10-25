@@ -3,5 +3,5 @@ COPY dist/ dist/
 COPY package.json .
 EXPOSE 4000
 RUN ls -la
-RUN npm install --production
+RUN npm install
 ENTRYPOINT ["npm","run-script","start"]
