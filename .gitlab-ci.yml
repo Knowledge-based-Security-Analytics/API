@@ -24,4 +24,5 @@ deploy:
     - docker build -t visualcepgraphql:0.1 .
     - docker kill visualcepgraphql || true
     - docker rm visualcepgraphql || true
-    - docker run -p 4000:4000 --restart=always -d --name=visualcepgraphql visualcepgraphql:0.1
+#    - docker run -p 4000:4000 --restart=always -d --name=visualcepgraphql visualcepgraphql:0.1
+    - docker run -p 4000:4000 --restart=always --name=visualcepgraphql visualcepgraphql:0.1
