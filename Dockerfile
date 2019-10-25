@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM node:10.16.3
 COPY dist/ dist/
 EXPOSE 4000
 RUN npm install
