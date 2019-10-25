@@ -1,0 +1,26 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags: 
+    - docker
+  image: node:10.16.3
+  script: 
+    - npm install
+    - npm run-script build
+    - ls -la
+  artifacts:
+    paths:
+      - dist/
+  
+#deploy:
+#  stage: deploy
+#  tags:
+#    - shell
+#  script:
+#    - docker build -t visualcepjava:0.1 .
+#    - docker kill visualcepjava || true
+#    - docker rm visualcepjava || true
+#    - docker run -p 8082:8082 --restart=always -d --name=visualcepjava visualcepjava:0.1
