@@ -11,7 +11,6 @@ build:
     - apt-get update && apt-get install -y libssl-dev liblz4-dev libsasl2-dev libpthread-stubs0-dev build-essential pkg-config
     - npm install
     - npm run-script build
-    - ls -la
   cache:
     key: build-cache-graphql
     paths:
