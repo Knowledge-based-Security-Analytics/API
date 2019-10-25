@@ -12,6 +12,10 @@ build:
     - npm install
     - npm run-script build
     - ls -la
+  cache:
+    key: build-cache-graphql
+    paths:
+    - node_modules/
   artifacts:
     paths:
       - dist/
