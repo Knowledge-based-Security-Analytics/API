@@ -6,19 +6,23 @@ const axios = require('axios').default;
 
 @Service()
 export class StatementsRestApiService {
+
     public async postStatement( eplStatement: string, deploymentId?: string): Promise<StatementApiReturn> {
+        const { ESPER_HOST } = process.env;
         try {
-            const response = (deploymentId) ? await axios.put(`http://localhost:8080/statement/${deploymentId}`, { statement: eplStatement }) : await axios.post(`http://localhost:8080/statement/`, { statement: eplStatement });
+            console.log(ESPER_HOST);
+            const response = (deploymentId) ? await axios.put(`${ ESPER_HOST }/statement/${ deploymentId }`, { statement: eplStatement }) : await axios.post(`${ ESPER_HOST }/statement/`, { statement: eplStatement });
             catCepRestPost.info(() => `Statement successfully redeployed under DeploymentID ${ response.data.deploymentId }` );
             return {deploymentId: response.data.deploymentId, deploymentIdDependencies: response.data.deploymentIdDependencies};
         } catch(error) {
-            catCepRestPut.info(() => `${ error }` );
+            (deploymentId) ? catCepRestPut.info(() => `${ error }` ) :  catCepRestPost.info(() => `${ error }` );
             throw new CustomException(error.response.data.error);
         }
     }
 
     public async deleteStatement(deploymentId?: string): Promise<void> {
-        const endpoint = (deploymentId) ? `http://localhost:8080/statement/${deploymentId}` : `http://localhost:8080/statement/all`;
+        const { ESPER_HOST } = process.env;
+        const endpoint = (deploymentId) ? `${ ESPER_HOST }/statement/${deploymentId}` : `${ ESPER_HOST }/statement/all`;
         const responseString = (deploymentId) ? `Statement ${ deploymentId } successfully undeployed` : `All statements successfully undeployed`
         try {
            await axios.delete(endpoint);

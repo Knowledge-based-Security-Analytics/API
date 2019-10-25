@@ -1,4 +1,4 @@
-import {Category,CategoryLogger,CategoryServiceFactory,CategoryConfiguration,LogLevel} from "typescript-logging";
+import {Category,CategoryServiceFactory,CategoryConfiguration,LogLevel} from "typescript-logging";
  
 // Optionally change default settings, in this example set default logging to Info.
 // Without changing configuration, categories will log to Error.
@@ -11,6 +11,7 @@ export const catCepRest = new Category("cep_rest");
 export const catCepRestPost = new Category("POST /statement", catCepRest);
 export const catCepRestDelete = new Category("DELETE /statement/{deploymentId}", catCepRest);
 export const catCepRestPut = new Category("PUT /statement/{deploymentId}", catCepRest);
+export const catKafka = new Category("kafka");
  
 // Optionally get a logger for a category, since 0.5.0 this is not necessary anymore, you can use the category itself to log.
   // export const log: CategoryLogger = CategoryServiceFactory.getLogger(cat);

@@ -1,4 +1,4 @@
-import { Subscription, Mutation, ObjectType, Field, ID, Arg, Root, Resolver, Args, ArgsType } from "type-graphql";
+import { Subscription, Mutation, ObjectType, Field, ID, Arg, Root, Resolver, Args, ArgsType, Query } from "type-graphql";
 import { KafkaConnector } from "../services/database/kafkaConnector.service";
 import { Service } from "typedi";
 import { KafkaPubSub } from "graphql-kafka-subscriptions";
@@ -31,6 +31,21 @@ export class KafkaResolver {
         const pubsub = await this.kafkaConnector.getPubSub('json-events');
         return pubsub.publish(payload);
     }*/
+   
+    @Query(returns => [String], { nullable: true })
+    async topics(): Promise<String[]> {
+        return await this.kafkaConnector.getTopicList();
+    }
+
+    @Mutation(returns => Boolean)
+    async createTopic(@Arg("topic") topic: String): Promise<boolean> {
+        return await this.kafkaConnector.createTopic( topic );
+    }
+
+    @Mutation(returns => Boolean)
+    async deleteTopic(@Arg("topic") topic: String): Promise<boolean> {
+        return await this.kafkaConnector.deleteTopic( topic );
+    }
 
     @Subscription({
         subscribe: ( root, args: KafkaTopicInput, context ) => {

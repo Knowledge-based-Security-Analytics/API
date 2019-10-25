@@ -19,7 +19,7 @@ export default class MongoConnectorService {
     });
 
     constructor() {
-        const {MONGO_DB_USER, MONGO_DB_PASSWORD, MONGO_DB_PATH } = process.env;
+        const { MONGO_DB_USER, MONGO_DB_PASSWORD, MONGO_DB_PATH } = process.env;
         const mongoURI =   `mongodb://${ MONGO_DB_USER }:${ MONGO_DB_PASSWORD }${ MONGO_DB_PATH }`;
         mongoose.connect(
             mongoURI,
