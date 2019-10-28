@@ -26,7 +26,7 @@ deploy:
   tags:
     - shell
   script:
-    - docker build -t visualcepgraphql:0.1 .
-    - docker kill visualcepgraphql || true
-    - docker rm visualcepgraphql || true
-    - docker run -p 4000:4000 --restart=always -d --name=visualcepgraphql -v visualcepgrapqlnode_modules:/node_modules visualcepgraphql:0.1
+    - docker build -t visual-cep-pattern_graphql:0.1 .
+    - docker kill visual-cep-pattern_graphql || true
+    - docker rm visual-cep-pattern_graphql || true
+    - docker run -p 4000:4000 --restart=always -d --name=visual-cep-pattern_graphql -v visual-cep-pattern_grapqlnode_modules:/node_modules visual-cep-pattern_graphql:0.1
