@@ -21,6 +21,8 @@ build:
   
 deploy:
   stage: deploy
+  only:
+    - master
   tags:
     - shell
   script:
