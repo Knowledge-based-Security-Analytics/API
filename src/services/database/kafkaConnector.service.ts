@@ -7,11 +7,11 @@ const kafka = require('kafka-node');
 @Service()
 export class KafkaConnector {
 
-    client = new kafka.KafkaClient({ kafkaHost: 'pcrw00159.uni-regensburg.de:9092' });
+    client = new kafka.KafkaClient({ kafkaHost: '192.168.2.116:9092' });
     admin = new kafka.Admin(this.client);
     adminClient = rdkafka.AdminClient.create({
         'client.id': 'kafka-admin',
-        'metadata.broker.list': 'pcrw00159.uni-regensburg.de'
+        'metadata.broker.list': '192.168.2.116'
     });
 
     constructor(@Inject("ACTIVE_KAFKA_PUBSUBS") private readonly activePubSubs: {topic: string, pubsub: KafkaPubSub}[]) { }
