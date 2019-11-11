@@ -8,6 +8,9 @@ class BaseStatementInput implements Partial<Statement> {
 
     @Field({ nullable: true })
     deploymentMode?: string;
+
+    @Field({ nullable: true })
+    eventType?: boolean;
 }
 
 @InputType()

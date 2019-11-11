@@ -16,7 +16,8 @@ export class StatementUtilsService {
             newStatementData.eplStatement,
             newStatementData.name ? newStatementData.name : newStatementData.eplStatement,
             newStatementData.blocklyXml,
-            newStatementData.deploymentMode ? newStatementData.deploymentMode : 'dev' );
+            newStatementData.deploymentMode,
+            newStatementData.eventType);
         return await this.deployStatement( statement );
     }
 
@@ -26,6 +27,7 @@ export class StatementUtilsService {
             statement.name = updateData.name ? updateData.name : statement.name;
             statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
             statement.blocklyXml = updateData.blocklyXml ? updateData.blocklyXml : statement.blocklyXml;
+            statement.eventType = updateData.eventType ? updateData.eventType : statement.eventType;
             if (updateData.eplStatement && (statement.eplStatement !== updateData.eplStatement)) {
                 statement.eplStatement = updateData.eplStatement;
                 statement = this.deployStatement( statement, statement.deploymentId );
