@@ -1,9 +1,8 @@
 import { DeployStatementInput, QueryStatementInput, RedeployStatementInput } from "../../models/graphql/statement.input";
 import Statement from "../../models/graphql/statement.type";
-import { Service, Inject } from "typedi";
+import { Service } from "typedi";
 import MongoConnectorService from "../database/mongoConnector.service";
 import { StatementsRestApiService } from "../api/statementsRestApi.service";
-import { StatementApiReturn } from "../../models/api/statementApiReturn.type";
 import { CustomException } from "../../models/exception/custom.exception";
 import { catCepRestPut } from "../log/config.logging";
 
@@ -16,6 +15,7 @@ export class StatementUtilsService {
         const statement = new Statement( 
             newStatementData.eplStatement,
             newStatementData.name ? newStatementData.name : newStatementData.eplStatement,
+            newStatementData.blocklyXml,
             newStatementData.deploymentMode ? newStatementData.deploymentMode : 'dev' );
         return await this.deployStatement( statement );
     }
@@ -25,6 +25,7 @@ export class StatementUtilsService {
         try {
             statement.name = updateData.name ? updateData.name : statement.name;
             statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
+            statement.blocklyXml = updateData.blocklyXml ? updateData.blocklyXml : statement.blocklyXml;
             if (updateData.eplStatement && (statement.eplStatement !== updateData.eplStatement)) {
                 statement.eplStatement = updateData.eplStatement;
                 statement = this.deployStatement( statement, statement.deploymentId );
