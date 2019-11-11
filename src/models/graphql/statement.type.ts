@@ -27,11 +27,16 @@ export default class Statement extends Typegoose {
     @Field( type => String )
     blocklyXml: string;
 
-    constructor( eplStatement: string, name: string, blocklyXml: string, deploymentMode?: string ) {
+    @prop()
+    @Field( type => Boolean )
+    eventType: Boolean = false; 
+
+    constructor( eplStatement: string, name: string, blocklyXml: string, deploymentMode?: string, eventType?: boolean ) {
             super();
             this.eplStatement = eplStatement;
             this.name = name;
             this.blocklyXml = blocklyXml;
             this.deploymentMode = deploymentMode ? deploymentMode : "dev";
+            this.eventType = eventType ? eventType : false;
     }
 }
