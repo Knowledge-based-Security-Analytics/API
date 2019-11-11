@@ -8,28 +8,30 @@ export default class Statement extends Typegoose {
     deploymentId: string = '-1';
 
     @prop()
-    @Field(type => [String])
+    @Field( type => [String] )
     deploymentDependencies: string[] = [];
 
     @prop()
-    @Field()
+    @Field( type => String )
     deploymentMode: string;
 
     @prop()
-    @Field()
+    @Field( type => String )
     eplStatement: string;
 
     @prop()
-    @Field()
+    @Field( type => String )
     name: string;
 
-    constructor(
-        eplStatement: string,
-        name: string,
-        deploymentMode?: string ) {
+    @prop()
+    @Field( type => String )
+    blocklyXml: string;
+
+    constructor( eplStatement: string, name: string, blocklyXml: string, deploymentMode?: string ) {
             super();
             this.eplStatement = eplStatement;
             this.name = name;
+            this.blocklyXml = blocklyXml;
             this.deploymentMode = deploymentMode ? deploymentMode : "dev";
     }
 }

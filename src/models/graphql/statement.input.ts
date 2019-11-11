@@ -14,6 +14,9 @@ class BaseStatementInput implements Partial<Statement> {
 export class DeployStatementInput extends BaseStatementInput implements Partial<Statement> {
     @Field()
     eplStatement!: string;
+
+    @Field()
+    blocklyXml!: string;
 }
 
 @InputType()
@@ -23,6 +26,9 @@ export class RedeployStatementInput extends BaseStatementInput implements Partia
 
     @Field({ nullable: true })
     eplStatement?: string;
+
+    @Field({ nullable: true })
+    blocklyXml?: string;
 }
 
 @ArgsType()
