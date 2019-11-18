@@ -73,7 +73,7 @@ export class StatementUtilsService {
         let statements = await this.mongoConnectorService.readAllStatements();
         if (statementArgs.deploymentMode) { statements = statements.filter( statement => statement.deploymentMode === statementArgs.deploymentMode )}
         if (statementArgs.deploymentId) { statements = statements.filter( statement => statement.deploymentId === statementArgs.deploymentId )}
-        if (statementArgs.eplStatement) { statements = statements.filter ( statement => statement.eplStatement === statementArgs.eplStatement )}
+        if (statementArgs.eventType) { statements = statements.filter ( statement => statement.eventType === statementArgs.eventType )}
         if (statementArgs.name) { statements = statements.filter( statement => statement.name === statementArgs.name )}
         return statements;
     }
