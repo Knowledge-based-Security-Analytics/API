@@ -35,10 +35,16 @@ export class RedeployStatementInput extends BaseStatementInput implements Partia
 }
 
 @ArgsType()
-export class QueryStatementInput extends BaseStatementInput implements Partial<Statement> {
+export class QueryStatementInput implements Partial<Statement> {
     @Field({ nullable: true })
     deploymentId?: string;
 
     @Field({ nullable: true })
-    eplStatement?: string;
+    name?: string;
+
+    @Field({ nullable: true })
+    deploymentMode?: string;
+
+    @Field({ nullable: true })
+    eventType?: boolean;
 }
