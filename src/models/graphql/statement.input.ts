@@ -1,10 +1,16 @@
-import { InputType, Field, Int, ArgsType } from "type-graphql";
+import { InputType, Field, ArgsType } from "type-graphql";
 import Statement from "./statement.type";
 
 @InputType()
 class BaseStatementInput implements Partial<Statement> {
     @Field({ nullable: true })
     name?: string;
+
+    @Field({ nullable: true })
+    description?: string;
+
+    @Field({ nullable: true })
+    modified?: string;
 
     @Field({ nullable: true })
     deploymentMode?: string;

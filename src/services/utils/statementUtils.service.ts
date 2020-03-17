@@ -15,6 +15,8 @@ export class StatementUtilsService {
         const statement = new Statement( 
             newStatementData.eplStatement,
             newStatementData.name ? newStatementData.name : newStatementData.eplStatement,
+            newStatementData.description ? newStatementData.description : "",
+            new Date().toLocaleString(),
             newStatementData.blocklyXml,
             newStatementData.deploymentMode,
             newStatementData.eventType);
@@ -22,15 +24,17 @@ export class StatementUtilsService {
     }
 
     public async updateStatement( updateData: RedeployStatementInput ): Promise<Statement> {
-        let statement = await this.mongoConnectorService.readStatement( updateData.deploymentId );
+        let statement: Statement = await this.mongoConnectorService.readStatement( updateData.deploymentId );
         try {
             statement.name = updateData.name ? updateData.name : statement.name;
+            statement.description = updateData.description ? updateData.description : statement.description;
+            statement.modified = new Date().toLocaleString();
             statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
             statement.blocklyXml = updateData.blocklyXml ? updateData.blocklyXml : statement.blocklyXml;
             statement.eventType = updateData.eventType ? updateData.eventType : statement.eventType;
             if (updateData.eplStatement && (statement.eplStatement !== updateData.eplStatement)) {
                 statement.eplStatement = updateData.eplStatement;
-                statement = this.deployStatement( statement, statement.deploymentId );
+                statement = await this.deployStatement( statement, statement.deploymentId );
             } else {
                 statement = await this.mongoConnectorService.updateStatement( statement.deploymentId, statement );
             }
