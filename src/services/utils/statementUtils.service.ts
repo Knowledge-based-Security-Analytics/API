@@ -16,7 +16,7 @@ export class StatementUtilsService {
             newStatementData.eplStatement,
             newStatementData.name ? newStatementData.name : newStatementData.eplStatement,
             newStatementData.description ? newStatementData.description : "",
-            new Date().toLocaleString(),
+            new Date().toISOString(),
             newStatementData.blocklyXml,
             newStatementData.deploymentMode,
             newStatementData.eventType);
@@ -28,7 +28,7 @@ export class StatementUtilsService {
         try {
             statement.name = updateData.name ? updateData.name : statement.name;
             statement.description = updateData.description ? updateData.description : statement.description;
-            statement.modified = new Date().toLocaleString();
+            statement.modified = new Date().toISOString();
             statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
             statement.blocklyXml = updateData.blocklyXml ? updateData.blocklyXml : statement.blocklyXml;
             statement.eventType = updateData.eventType ? updateData.eventType : statement.eventType;
