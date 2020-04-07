@@ -40,8 +40,8 @@ export default class Statement extends Typegoose {
     eventType: Boolean = false; 
 
     @prop()
-    @Field( type => Object)
-    objectRepresentation: object = {};
+    @Field( type => String)
+    objectRepresentation: string = '';
 
     constructor(
         eplStatement: string,
@@ -49,7 +49,7 @@ export default class Statement extends Typegoose {
         description: string,
         modified: string,
         blocklyXml: string,
-        objectRepresentation: object,
+        objectRepresentation: string,
         deploymentMode?: string,
         eventType?: boolean) {
             super();
@@ -60,5 +60,6 @@ export default class Statement extends Typegoose {
             this.blocklyXml = blocklyXml;
             this.deploymentMode = deploymentMode ? deploymentMode : "dev";
             this.eventType = eventType ? eventType : false;
+            this.objectRepresentation = objectRepresentation;
     }
 }
