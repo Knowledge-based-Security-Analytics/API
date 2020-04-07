@@ -18,6 +18,7 @@ export class StatementUtilsService {
             newStatementData.description ? newStatementData.description : "",
             new Date().toISOString(),
             newStatementData.blocklyXml,
+            newStatementData.objectRepresentation,
             newStatementData.deploymentMode,
             newStatementData.eventType);
         return await this.deployStatement( statement );
@@ -32,6 +33,7 @@ export class StatementUtilsService {
             statement.deploymentMode = updateData.deploymentMode ? updateData.deploymentMode : statement.deploymentMode;
             statement.blocklyXml = updateData.blocklyXml ? updateData.blocklyXml : statement.blocklyXml;
             statement.eventType = updateData.eventType ? updateData.eventType : statement.eventType;
+            statement.objectRepresentation = updateData.objectRepresentation ? updateData.objectRepresentation : statement.objectRepresentation;
             if (updateData.eplStatement && (statement.eplStatement !== updateData.eplStatement)) {
                 statement.eplStatement = updateData.eplStatement;
                 statement = await this.deployStatement( statement, statement.deploymentId );

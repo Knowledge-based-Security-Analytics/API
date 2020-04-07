@@ -13,7 +13,7 @@ export default class MongoConnectorService {
         useFindAndModify: false,
     };
 
-    private statementModel = new Statement("", "", "", "", "-1").getModelForClass(Statement, {
+    private statementModel = new Statement("", "", "", "", "-1", {}).getModelForClass(Statement, {
         existingMongoose: mongoose,
         schemaOptions: {collection: 'StatementCollection'}
     });
