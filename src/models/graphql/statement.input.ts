@@ -28,7 +28,7 @@ export class DeployStatementInput extends BaseStatementInput implements Partial<
     blocklyXml!: string;
 
     @Field()
-    objectRepresentation!: object;
+    objectRepresentation!: string;
 }
 
 @InputType()
@@ -43,7 +43,7 @@ export class RedeployStatementInput extends BaseStatementInput implements Partia
     blocklyXml?: string;
 
     @Field({nullable: true})
-    objectRepresentation?: object;
+    objectRepresentation?: string;
 }
 
 @ArgsType()
