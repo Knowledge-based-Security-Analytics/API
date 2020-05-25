@@ -42,8 +42,8 @@ export class StatementUtilsService {
             }
             return statement;
         } catch (error) {
-            catCepRestPut.info(() => `Statement with deploymentId ${updateData.deploymentId} not found in MongoDB` );
-            throw new CustomException( `Statement with deploymentId ${updateData.deploymentId} not found in MongoDB` );
+            catCepRestPut.info(() => `Statement with deploymentId ${updateData.deploymentId} could not be updated: ${error.message}`);
+            throw new CustomException(`Statement with deploymentId ${updateData.deploymentId} could not be updated: ${error.message}`);
         }
     }
 
